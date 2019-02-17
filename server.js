@@ -15,6 +15,8 @@ app.use(express.static('public'));
 // http://expressjs.com/en/starter/basic-routing.html
 app.get('/', function(request, response) {
 
+  console.log(request.query.id)
+  
   https.get('https://stackoverflow.com/ossads/300x250', (resp) => {
   let data = '';
 
