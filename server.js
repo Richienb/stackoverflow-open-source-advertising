@@ -18,7 +18,7 @@ app.get('/', function(request, response) {
   let width = request.query.width ? request.query.width : '300'
   let height = request.query.height ? request.query.height : '250'
   console.log(request.query)
-  let marginfix = request.query.margin === 'false' ?  "<style>body, .ad-container { margin: 0 }</style>"
+  let marginfix = request.query.margin === 'true' ? "" : "<style>body, .ad-container { margin: 0 }</style>"
   
   https.get(`https://stackoverflow.com/ossads/${width}x${height}`, (resp) => {
   let data = '';
@@ -30,7 +30,7 @@ app.get('/', function(request, response) {
 
   // The whole response has been received. Print out the result.
   resp.on('end', () => {
-    response.send(data + "<style>body, .ad-container { margin: 0 }</style>");
+    response.send(data + marginfix);
   });
 
 }).on("error", (err) => {
