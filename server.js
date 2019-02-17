@@ -25,8 +25,7 @@ app.get('/', function(request, response) {
 
   // The whole response has been received. Print out the result.
   resp.on('end', () => {
-    console.log(data + "<style>body, </style>");
-    response.send(data);
+    response.send(data + "<style>body, .ad-container { margin: 0 }</style>");
   });
 
 }).on("error", (err) => {
