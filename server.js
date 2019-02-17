@@ -4,7 +4,7 @@
 // init project
 const express = require('express');
 const app = express();
-const http = require('http')
+const https = require('https')
 
 // we've started you off with Express, 
 // but feel free to use whatever libs or frameworks you'd like through `package.json`.
@@ -14,30 +14,25 @@ app.use(express.static('public'));
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get('/', function(request, response) {
-  var options = {
-  host: 'stackoverflow.com',
-  port: 443,
-  path: '/ossads/300x250'
-};
 
-http.get(options, function(res) {
-  // console.log("Got response: " + res.statusCode);
-  // console.log(res)
-  // response.send(res.statusCode)
+  https.get('https://stackoverflow.com/ossads/300x250', (resp) => {
   let data = '';
 
   // A chunk of data has been recieved.
-  res.on('data', (chunk) => {
+  resp.on('data', (chunk) => {
     data += chunk;
   });
 
   // The whole response has been received. Print out the result.
-  res.on('end', () => {
-    console.log(data);
+  resp.on('end', () => {
+    console.log(data + "<style>body, </style>");
+    response.send(data);
   });
-}).on('error', function(e) {
-  console.log("Got error: " + e.message);
+
+}).on("error", (err) => {
+  console.log("Error: " + err.message);
 });
+  
 });
 
 // listen for requests :)
