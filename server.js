@@ -14,10 +14,13 @@ app.use(express.static('public'));
 
 // http://expressjs.com/en/starter/basic-routing.html
 app.get('/', function(request, response) {
-
-  console.log(request.query.id)
   
-  https.get('https://stackoverflow.com/ossads/300x250', (resp) => {
+  let width = request.query.width ? request.query.width : '300'
+  let height = request.query.height ? request.query.height : '250'
+  console.log(request.query)
+  let marginfix = request.query.margin === 'false' ?  "<style>body, .ad-container { margin: 0 }</style>"
+  
+  https.get(`https://stackoverflow.com/ossads/${width}x${height}`, (resp) => {
   let data = '';
 
   // A chunk of data has been recieved.
