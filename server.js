@@ -1,6 +1,3 @@
-// server.js
-// where your node app starts
-
 // init project
 const express = require("express")
 const app = express()
@@ -21,10 +18,11 @@ app.get("/", function(request, response) {
     extracss += request.query.margin === 'true' ? "" : "<style>body, .ad-container { margin: 0 }</style>"
     extracss += request.query.footer === 'false' ? "<style>div.footer { display: none }</style>" : ""
 
-    https.get({
-  hostname: `https://stackoverflow.com/ossads/${width}x${height}`,
-  headers: { "User-Agent": 'Mozilla/5.0' }
-}, (resp) => {
+    https.get(`https://stackoverflow.com/ossads/${width}x${height}`, {
+        headers: {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.80 Safari/537.36"
+        }
+    }, (resp) => {
         let data = ""
 
         // A chunk of data has been recieved.
@@ -38,7 +36,7 @@ app.get("/", function(request, response) {
         })
 
     }).on("error", (err) => {
-        console.log("Error: " + err.message)
+        response.send("An error occurred: " + err.message)
     })
 
 })
